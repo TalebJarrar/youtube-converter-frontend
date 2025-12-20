@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free YouTube to MP3 and MP4 converter. Download YouTube videos in high quality instantly.">
+    <meta name="keywords" content="youtube converter, youtube to mp3, youtube to mp4, video downloader, free converter">
+    <title>YouTube to MP3/MP4 Converter - Free & Fast</title>
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Google AdSense - Replace with YOUR publisher ID -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXX"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+    <!-- Top Banner Ad -->
+    <div class="ad-container ad-top">
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-XXXXXXXXXX"
+             data-ad-slot="XXXXXXXXXX"
+             data-ad-format="horizontal"
+             data-full-width-responsive="true"></ins>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1>🎵 YouTube Converter</h1>
+            <p>Convert YouTube videos to MP3 or MP4 - Free & Fast</p>
+        </header>
+
+        <main>
+            <div class="main-content">
+                <div class="converter-box">
+                    <div class="input-group">
+                        <input 
+                            type="text" 
+                            id="videoUrl" 
+                            placeholder="Paste YouTube URL here..."
+                            autocomplete="off"
+                        >
+                        <button id="clearBtn" class="clear-btn" title="Clear">×</button>
+                    </div>
+
+                    <div class="format-selector">
+                        <label class="format-option">
+                            <input type="radio" name="format" value="mp3" checked>
+                            <span class="format-card">
+                                <span class="format-icon">🎵</span>
+                                <span class="format-name">MP3</span>
+                                <span class="format-desc">Audio Only</span>
+                            </span>
+                        </label>
+                        <label class="format-option">
+                            <input type="radio" name="format" value="mp4">
+                            <span class="format-card">
+                                <span class="format-icon">🎬</span>
+                                <span class="format-name">MP4</span>
+                                <span class="format-desc">Video + Audio</span>
+                            </span>
+                        </label>
+                    </div>
+
+                    <button id="convertBtn" class="convert-btn">
+                        <span id="btnText">Convert & Download</span>
+                        <span id="btnLoader" class="loader hidden"></span>
+                    </button>
+
+                    <div id="status" class="status hidden"></div>
+                    <div id="error" class="error hidden"></div>
+
+                    <!-- Ad During Conversion -->
+                    <div id="conversionAd" class="ad-container ad-conversion hidden">
+                        <p class="ad-label">Advertisement</p>
+                        <ins class="adsbygoogle"
+                             style="display:block"
+                             data-ad-client="ca-pub-XXXXXXXXXX"
+                             data-ad-slot="XXXXXXXXXX"
+                             data-ad-format="rectangle"></ins>
+                    </div>
+
+                    <div id="videoInfo" class="video-info hidden">
+                        <img id="thumbnail" src="" alt="Video thumbnail">
+                        <div class="info-details">
+                            <h3 id="videoTitle"></h3>
+                            <p id="videoChannel"></p>
+                            <p id="videoDuration"></p>
+                        </div>
+                    </div>
+
+                    <!-- Ad Before Download -->
+                    <div id="preDownloadAd" class="ad-container ad-pre-download hidden">
+                        <p class="ad-label">Please wait - preparing your download...</p>
+                        <ins class="adsbygoogle"
+                             style="display:block"
+                             data-ad-client="ca-pub-XXXXXXXXXX"
+                             data-ad-slot="XXXXXXXXXX"
+                             data-ad-format="rectangle"></ins>
+                    </div>
+
+                    <div id="downloadSection" class="download-section hidden">
+                        <a id="downloadBtn" class="download-btn" download>
+                            📥 Download File
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Sidebar Ad (Desktop) -->
+                <aside class="sidebar-ad">
+                    <div class="ad-container">
+                        <p class="ad-label">Advertisement</p>
+                        <ins class="adsbygoogle"
+                             style="display:block"
+                             data-ad-client="ca-pub-XXXXXXXXXX"
+                             data-ad-slot="XXXXXXXXXX"
+                             data-ad-format="vertical"></ins>
+                    </div>
+                </aside>
+            </div>
+
+            <div class="features">
+                <div class="feature">
+                    <span class="feature-icon">⚡</span>
+                    <h3>Fast Conversion</h3>
+                    <p>Convert videos in seconds</p>
+                </div>
+                <div class="feature">
+                    <span class="feature-icon">🔒</span>
+                    <h3>Secure & Private</h3>
+                    <p>Your data stays private</p>
+                </div>
+                <div class="feature">
+                    <span class="feature-icon">✨</span>
+                    <h3>High Quality</h3>
+                    <p>Best audio & video quality</p>
+                </div>
+            </div>
+
+            <!-- Bottom Ad -->
+            <div class="ad-container ad-bottom">
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-XXXXXXXXXX"
+                     data-ad-slot="XXXXXXXXXX"
+                     data-ad-format="horizontal"
+                     data-full-width-responsive="true"></ins>
+            </div>
+        </main>
+
+        <footer>
+            <p>© 2024 YouTube Converter | For personal use only</p>
+            <p class="footer-links">
+                <a href="privacy.html">Privacy Policy</a> | 
+                <a href="terms.html">Terms of Service</a> | 
+                <a href="mailto:contact@youtubetompconverter.com">Contact</a>
+            </p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+    
+    <!-- Initialize AdSense ads -->
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</body>
+</html>
