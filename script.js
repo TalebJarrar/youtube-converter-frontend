@@ -12,7 +12,7 @@ const downloadSection = document.getElementById('downloadSection');
 const conversionAd = document.getElementById('conversionAd');
 const preDownloadAd = document.getElementById('preDownloadAd');
 
-const API_URL = 'https://youtube-converter-backend-bbg4.onrender.com';
+const API_URL = 'https://youtube-converter-backend-bbg4.onrender.com/api';
 
 // Track conversions for analytics
 let conversionCount = 0;
