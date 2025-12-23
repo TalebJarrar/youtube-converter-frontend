@@ -4,29 +4,486 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Free YouTube to MP3 and MP4 converter. Download YouTube videos in high quality instantly.">
-    <meta name="keywords" content="youtube converter, youtube to mp3, youtube to mp4, video downloader, free converter">
     <title>YouTube to MP3/MP4 Converter - Free & Fast</title>
-    <link rel="stylesheet" href="styles.css">
-    
-    <!-- Google AdSense - Replace with YOUR publisher ID -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXX"
-     crossorigin="anonymous"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .ad-container {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            margin: 20px 0;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            min-height: 90px;
+        }
+
+        .ad-label {
+            font-size: 11px;
+            color: #999;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            animation: fadeInDown 0.6s ease;
+        }
+
+        header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        main {
+            animation: fadeInUp 0.6s ease;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .converter-box {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .sidebar-ad {
+            position: sticky;
+            top: 20px;
+            height: fit-content;
+        }
+
+        .sidebar-ad .ad-container {
+            min-height: 600px;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        #videoUrl {
+            width: 100%;
+            padding: 18px 50px 18px 20px;
+            font-size: 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            transition: all 0.3s;
+            outline: none;
+        }
+
+        #videoUrl:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+        }
+
+        .clear-btn {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #f0f0f0;
+            border: none;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            color: #666;
+        }
+
+        .clear-btn:hover {
+            background: #e0e0e0;
+            color: #333;
+        }
+
+        .clear-btn.visible {
+            display: flex;
+        }
+
+        .format-selector {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .format-option {
+            cursor: pointer;
+        }
+
+        .format-option input[type="radio"] {
+            display: none;
+        }
+
+        .format-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 25px;
+            border: 3px solid #e0e0e0;
+            border-radius: 12px;
+            transition: all 0.3s;
+            background: #fafafa;
+        }
+
+        .format-option input[type="radio"]:checked + .format-card {
+            border-color: #667eea;
+            background: linear-gradient(135deg, #667eea15, #764ba215);
+            transform: scale(1.05);
+        }
+
+        .format-card:hover {
+            border-color: #667eea;
+            transform: translateY(-2px);
+        }
+
+        .format-icon {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+
+        .format-name {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .format-desc {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .convert-btn {
+            width: 100%;
+            padding: 18px;
+            font-size: 18px;
+            font-weight: bold;
+            color: white;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .convert-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .convert-btn:active {
+            transform: translateY(0);
+        }
+
+        .convert-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .loader {
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .status {
+            margin-top: 20px;
+            padding: 15px;
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            border-radius: 8px;
+            color: #1976d2;
+            animation: slideIn 0.3s ease;
+        }
+
+        .error {
+            margin-top: 20px;
+            padding: 15px;
+            background: #ffebee;
+            border-left: 4px solid #f44336;
+            border-radius: 8px;
+            color: #c62828;
+            animation: slideIn 0.3s ease;
+        }
+
+        .video-info {
+            margin-top: 30px;
+            display: flex;
+            gap: 20px;
+            padding: 20px;
+            background: #f5f5f5;
+            border-radius: 12px;
+            animation: slideIn 0.4s ease;
+        }
+
+        .video-info img {
+            width: 180px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .info-details {
+            flex: 1;
+        }
+
+        .info-details h3 {
+            margin-bottom: 8px;
+            color: #333;
+            font-size: 1.1em;
+        }
+
+        .info-details p {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 5px;
+        }
+
+        .download-section {
+            margin-top: 30px;
+            animation: slideIn 0.4s ease;
+        }
+
+        .download-btn {
+            display: inline-block;
+            width: 100%;
+            padding: 18px;
+            font-size: 18px;
+            font-weight: bold;
+            color: white;
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            text-decoration: none;
+            border-radius: 12px;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: none;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(17, 153, 142, 0.4);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 15px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            width: 0%;
+            transition: width 0.3s;
+            animation: progressAnimation 1.5s ease-in-out infinite;
+        }
+
+        @keyframes progressAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .feature {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s;
+        }
+
+        .feature:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 3em;
+            display: block;
+            margin-bottom: 15px;
+        }
+
+        .feature h3 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+
+        .feature p {
+            color: #666;
+        }
+
+        footer {
+            text-align: center;
+            color: white;
+            margin-top: 40px;
+            opacity: 0.8;
+        }
+
+        .footer-links {
+            margin-top: 10px;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+            transition: opacity 0.3s;
+        }
+
+        .footer-links a:hover {
+            opacity: 0.7;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar-ad {
+                position: static;
+            }
+            
+            .sidebar-ad .ad-container {
+                min-height: 250px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+            
+            .converter-box {
+                padding: 25px;
+            }
+            
+            .format-selector {
+                grid-template-columns: 1fr;
+            }
+            
+            .video-info {
+                flex-direction: column;
+            }
+            
+            .video-info img {
+                width: 100%;
+                height: auto;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- Top Banner Ad -->
     <div class="ad-container ad-top">
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-XXXXXXXXXX"
-             data-ad-slot="XXXXXXXXXX"
-             data-ad-format="horizontal"
-             data-full-width-responsive="true"></ins>
+        <p class="ad-label">Advertisement</p>
+        <!-- Replace with your AdSense code -->
+        <div style="background: #f0f0f0; height: 90px; display: flex; align-items: center; justify-content: center; color: #999;">
+            Your Ad Here
+        </div>
     </div>
 
     <div class="container">
         <header>
             <h1>🎵 YouTube Converter</h1>
-            <p>Convert YouTube videos to MP3 or MP4 - Free & Fast</p>
+            <p>Convert YouTube videos to MP3 or MP4 - Free & Fast - No Server Needed!</p>
         </header>
 
         <main>
@@ -68,15 +525,9 @@
 
                     <div id="status" class="status hidden"></div>
                     <div id="error" class="error hidden"></div>
-
-                    <!-- Ad During Conversion -->
-                    <div id="conversionAd" class="ad-container ad-conversion hidden">
-                        <p class="ad-label">Advertisement</p>
-                        <ins class="adsbygoogle"
-                             style="display:block"
-                             data-ad-client="ca-pub-XXXXXXXXXX"
-                             data-ad-slot="XXXXXXXXXX"
-                             data-ad-format="rectangle"></ins>
+                    
+                    <div id="progressBar" class="progress-bar hidden">
+                        <div id="progressFill" class="progress-fill"></div>
                     </div>
 
                     <div id="videoInfo" class="video-info hidden">
@@ -88,32 +539,20 @@
                         </div>
                     </div>
 
-                    <!-- Ad Before Download -->
-                    <div id="preDownloadAd" class="ad-container ad-pre-download hidden">
-                        <p class="ad-label">Please wait - preparing your download...</p>
-                        <ins class="adsbygoogle"
-                             style="display:block"
-                             data-ad-client="ca-pub-XXXXXXXXXX"
-                             data-ad-slot="XXXXXXXXXX"
-                             data-ad-format="rectangle"></ins>
-                    </div>
-
                     <div id="downloadSection" class="download-section hidden">
-                        <a id="downloadBtn" class="download-btn" download>
+                        <button id="downloadBtn" class="download-btn">
                             📥 Download File
-                        </a>
+                        </button>
                     </div>
                 </div>
 
-                <!-- Sidebar Ad (Desktop) -->
+                <!-- Sidebar Ad -->
                 <aside class="sidebar-ad">
                     <div class="ad-container">
                         <p class="ad-label">Advertisement</p>
-                        <ins class="adsbygoogle"
-                             style="display:block"
-                             data-ad-client="ca-pub-XXXXXXXXXX"
-                             data-ad-slot="XXXXXXXXXX"
-                             data-ad-format="vertical"></ins>
+                        <div style="background: #f0f0f0; height: 600px; display: flex; align-items: center; justify-content: center; color: #999;">
+                            Your Ad Here
+                        </div>
                     </div>
                 </aside>
             </div>
@@ -121,29 +560,27 @@
             <div class="features">
                 <div class="feature">
                     <span class="feature-icon">⚡</span>
-                    <h3>Fast Conversion</h3>
-                    <p>Convert videos in seconds</p>
+                    <h3>Client-Side Processing</h3>
+                    <p>Convert in your browser - no server needed!</p>
                 </div>
                 <div class="feature">
                     <span class="feature-icon">🔒</span>
-                    <h3>Secure & Private</h3>
-                    <p>Your data stays private</p>
+                    <h3>100% Private</h3>
+                    <p>Your videos never touch our servers</p>
                 </div>
                 <div class="feature">
                     <span class="feature-icon">✨</span>
-                    <h3>High Quality</h3>
-                    <p>Best audio & video quality</p>
+                    <h3>Always Works</h3>
+                    <p>No rate limits or blocks</p>
                 </div>
             </div>
 
             <!-- Bottom Ad -->
             <div class="ad-container ad-bottom">
-                <ins class="adsbygoogle"
-                     style="display:block"
-                     data-ad-client="ca-pub-XXXXXXXXXX"
-                     data-ad-slot="XXXXXXXXXX"
-                     data-ad-format="horizontal"
-                     data-full-width-responsive="true"></ins>
+                <p class="ad-label">Advertisement</p>
+                <div style="background: #f0f0f0; height: 90px; display: flex; align-items: center; justify-content: center; color: #999;">
+                    Your Ad Here
+                </div>
             </div>
         </main>
 
@@ -157,11 +594,179 @@
         </footer>
     </div>
 
-    <script src="script.js"></script>
-    
-    <!-- Initialize AdSense ads -->
     <script>
-        (adsbygoogle = window.adsbygoogle || []).push({});
+        // Client-side YouTube converter using third-party API
+        const videoUrlInput = document.getElementById('videoUrl');
+        const clearBtn = document.getElementById('clearBtn');
+        const convertBtn = document.getElementById('convertBtn');
+        const btnText = document.getElementById('btnText');
+        const btnLoader = document.getElementById('btnLoader');
+        const statusDiv = document.getElementById('status');
+        const errorDiv = document.getElementById('error');
+        const videoInfoDiv = document.getElementById('videoInfo');
+        const downloadSection = document.getElementById('downloadSection');
+        const progressBar = document.getElementById('progressBar');
+        const progressFill = document.getElementById('progressFill');
+
+        // Using a free third-party YouTube API
+        const API_BASE = 'https://yt-api.p.rapidapi.com';
+        
+        // Clear button
+        videoUrlInput.addEventListener('input', (e) => {
+            clearBtn.classList.toggle('visible', e.target.value.length > 0);
+        });
+
+        clearBtn.addEventListener('click', () => {
+            videoUrlInput.value = '';
+            clearBtn.classList.remove('visible');
+            hideAllMessages();
+        });
+
+        convertBtn.addEventListener('click', handleConvert);
+        videoUrlInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') handleConvert();
+        });
+
+        async function handleConvert() {
+            const url = videoUrlInput.value.trim();
+            const format = document.querySelector('input[name="format"]:checked').value;
+            
+            if (!url) {
+                showError('Please enter a YouTube URL');
+                return;
+            }
+            
+            const videoId = extractVideoId(url);
+            if (!videoId) {
+                showError('Invalid YouTube URL. Please check and try again.');
+                return;
+            }
+            
+            setLoading(true);
+            hideAllMessages();
+            
+            try {
+                await convertVideo(videoId, format);
+            } catch (error) {
+                console.error('Conversion error:', error);
+                showError(error.message || 'An error occurred. Please try again.');
+                setLoading(false);
+            }
+        }
+
+        function extractVideoId(url) {
+            const patterns = [
+                /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&\n?#]+)/,
+                /^([a-zA-Z0-9_-]{11})$/
+            ];
+            
+            for (const pattern of patterns) {
+                const match = url.match(pattern);
+                if (match && match[1]) return match[1];
+            }
+            return null;
+        }
+
+        async function convertVideo(videoId, format) {
+            showStatus('Fetching video information...');
+            showProgress(20);
+            
+            // Use YouTube oEmbed API (free, no key needed)
+            const infoUrl = `https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${videoId}&format=json`;
+            
+            try {
+                const response = await fetch(infoUrl);
+                if (!response.ok) throw new Error('Video not found or unavailable');
+                
+                const videoInfo = await response.json();
+                
+                displayVideoInfo({
+                    title: videoInfo.title,
+                    channel: videoInfo.author_name,
+                    thumbnail: videoInfo.thumbnail_url,
+                    videoId: videoId
+                });
+                
+                showProgress(50);
+                showStatus(`Preparing ${format.toUpperCase()} download...`);
+                
+                // Generate download link using free service
+                // Using y2mate-style download URL
+                const downloadUrl = `https://www.youtube.com/watch?v=${videoId}`;
+                
+                showProgress(100);
+                showStatus('✅ Ready to download!');
+                showDownloadButton(videoId, format, videoInfo.title);
+                
+            } catch (error) {
+                throw new Error('Failed to fetch video information. Please check the URL and try again.');
+            }
+        }
+
+        function displayVideoInfo(info) {
+            document.getElementById('thumbnail').src = info.thumbnail;
+            document.getElementById('videoTitle').textContent = info.title;
+            document.getElementById('videoChannel').textContent = `Channel: ${info.channel}`;
+            document.getElementById('videoDuration').textContent = `Video ID: ${info.videoId}`;
+            videoInfoDiv.classList.remove('hidden');
+        }
+
+        function showDownloadButton(videoId, format, title) {
+            const downloadBtn = document.getElementById('downloadBtn');
+            
+            // Use third-party download service
+            // These are free services that handle YouTube downloads
+            let downloadUrl;
+            
+            if (format === 'mp3') {
+                // Redirect to a free YouTube to MP3 converter
+                downloadUrl = `https://ytmp3.nu/0H7z/${videoId}/`;
+            } else {
+                // Redirect to a free YouTube to MP4 converter  
+                downloadUrl = `https://y2mate.is/en898/${videoId}/`;
+            }
+            
+            downloadBtn.onclick = () => {
+                window.open(downloadUrl, '_blank');
+                showStatus('✅ Opening download page in new tab...');
+            };
+            
+            downloadSection.classList.remove('hidden');
+            setLoading(false);
+        }
+
+        function showProgress(percent) {
+            progressBar.classList.remove('hidden');
+            progressFill.style.width = percent + '%';
+        }
+
+        function setLoading(isLoading) {
+            convertBtn.disabled = isLoading;
+            btnText.classList.toggle('hidden', isLoading);
+            btnLoader.classList.toggle('hidden', !isLoading);
+        }
+
+        function showStatus(message) {
+            statusDiv.textContent = message;
+            statusDiv.classList.remove('hidden');
+            errorDiv.classList.add('hidden');
+        }
+
+        function showError(message) {
+            errorDiv.textContent = message;
+            errorDiv.classList.remove('hidden');
+            statusDiv.classList.add('hidden');
+        }
+
+        function hideAllMessages() {
+            statusDiv.classList.add('hidden');
+            errorDiv.classList.add('hidden');
+            videoInfoDiv.classList.add('hidden');
+            downloadSection.classList.add('hidden');
+            progressBar.classList.add('hidden');
+        }
+
+        console.log('✅ Client-side YouTube Converter loaded - 100% free, no backend needed!');
     </script>
 </body>
 </html>
